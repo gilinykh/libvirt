@@ -14,7 +14,9 @@ create table vm_type (
 
 create table vm_type_inventory (
   type_id varchar(100) primary key references vm_type(id),
-  stocked integer not null
+  stocked integer not null,
+  reserved integer not null,
+  allocated integer not null
 );
 
 create table vm_type_price (

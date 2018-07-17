@@ -8,12 +8,14 @@ import java.util.Collection;
 @Getter
 @AllArgsConstructor
 public class VmType {
+    private VmTypeId id;
     private String name;
     private String cpuType;
     private int cpuCount;
     private int ram;
     private int ssd;
     private GpuInfo gpu;
+    private String ip;
 
     @Getter
     @AllArgsConstructor
