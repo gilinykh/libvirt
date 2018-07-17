@@ -1,6 +1,6 @@
-package com.example.libvirtapi.adapters;
+package com.example.libvirtapi.ports.rest;
 
-import com.example.libvirtapi.adapters.representation.VmTypeItemRepresentation;
+import com.example.libvirtapi.ports.rest.representation.VmTypeItemRepresentation;
 import com.example.libvirtapi.app.VmTypeCatalog;
 import com.example.libvirtapi.domain.VmTypeItem;
 import lombok.AllArgsConstructor;

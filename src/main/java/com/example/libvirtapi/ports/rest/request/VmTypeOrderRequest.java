@@ -1,4 +1,4 @@
-package com.example.libvirtapi.adapters.request;
+package com.example.libvirtapi.ports.rest.request;
 
 import com.example.libvirtapi.domain.VmTypeId;
 import lombok.Getter;

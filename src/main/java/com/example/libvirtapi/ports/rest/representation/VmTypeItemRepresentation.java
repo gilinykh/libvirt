@@ -1,4 +1,4 @@
-package com.example.libvirtapi.adapters.representation;
+package com.example.libvirtapi.ports.rest.representation;
 
 import com.example.libvirtapi.domain.VmType;
 import com.example.libvirtapi.domain.VmTypeAvailability;
