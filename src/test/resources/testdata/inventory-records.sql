@@ -1,0 +1,1 @@
+insert into vm_type_inventory(type_id, stocked, reserved, allocated) values('AI-2', 1, 0, 0);

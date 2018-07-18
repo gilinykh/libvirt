@@ -18,6 +18,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 // todo: исполнение заявок через публикацию событий
+// todo: отслеживание состояния заявки; как узнать какая именно заявка из 2х зарезервировала ВМ?
 @Slf4j
 @Validated
 @AllArgsConstructor
@@ -33,7 +34,7 @@ public class AsyncOrders implements Orders {
     public void create(@NotNull @Valid VmTypeOrderRequest request, @NotNull Customer customer) throws VmTypeMissingException, VmTypeOverbookedException {
         VmType vmType = vmTypes.get(request.getType()).orElseThrow(() -> new VmTypeMissingException(request.getType()));
 
-        vmInventory.reserve(vmType);
+        vmInventory.reserve(vmType.getId());
 
         CompletableFuture<VmType> cf = CompletableFuture.supplyAsync(() -> {
             libvirt.create(vmType);
@@ -42,7 +43,7 @@ public class AsyncOrders implements Orders {
 
         cf.thenAccept(_vmType -> {
             try {
-                vmInventory.allocate(_vmType);
+                vmInventory.allocate(_vmType.getId());
             } catch (VmTypeMissingException | VmTypeStockDepletedException e) {
                 log.error(e.getMessage(), e);
                 cf.completeExceptionally(new CompletionException("", e));

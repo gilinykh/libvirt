@@ -1,6 +1,6 @@
 package com.example.libvirtapi.app;
 
-import com.example.libvirtapi.domain.VmType;
+import com.example.libvirtapi.domain.VmTypeId;
 import com.example.libvirtapi.domain.VmTypeStocked;
 import com.example.libvirtapi.domain.ex.VmTypeOverbookedException;
 import com.example.libvirtapi.domain.ex.VmTypeMissingException;
@@ -18,29 +18,30 @@ public class ObservantVmInventory implements VmInventory {
 
     @Override
     @Transactional
-    public void allocate(VmType vmType) throws VmTypeMissingException, VmTypeStockDepletedException {
-        VmTypeStocked vmTypeStocked = vmInventory.stocked(vmType).orElseThrow(() -> new VmTypeMissingException(vmType.getId()));
+    public void allocate(VmTypeId vmTypeId) throws VmTypeMissingException, VmTypeStockDepletedException {
+        VmTypeStocked vmTypeStocked = vmInventory.stocked(vmTypeId).orElseThrow(() -> new VmTypeMissingException(vmTypeId));
 
         if (vmTypeStocked.isFullyAllocated()) {
-            throw new VmTypeStockDepletedException(vmType.getId());
+            throw new VmTypeStockDepletedException(vmTypeId);
         }
 
-        vmInventory.allocate(vmType);
+        vmInventory.allocate(vmTypeId);
     }
 
     @Override
-    public void reserve(VmType vmType) throws VmTypeOverbookedException, VmTypeMissingException {
-        VmTypeStocked vmTypeStocked = vmInventory.stocked(vmType).orElseThrow(() -> new VmTypeMissingException(vmType.getId()));
+    @Transactional
+    public void reserve(VmTypeId vmTypeId) throws VmTypeOverbookedException, VmTypeMissingException {
+        VmTypeStocked vmTypeStocked = vmInventory.stocked(vmTypeId).orElseThrow(() -> new VmTypeMissingException(vmTypeId));
 
         if (vmTypeStocked.isFullyReserved()) {
-            throw new VmTypeOverbookedException(vmType.getId());
+            throw new VmTypeOverbookedException(vmTypeId);
         }
 
-        vmInventory.reserve(vmType);
+        vmInventory.reserve(vmTypeId);
     }
 
     @Override
-    public Optional<VmTypeStocked> stocked(VmType vmType) {
-        return vmInventory.stocked(vmType);
+    public Optional<VmTypeStocked> stocked(VmTypeId vmTypeId) {
+        return vmInventory.stocked(vmTypeId);
     }
 }

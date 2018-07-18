@@ -3,10 +3,12 @@ package com.example.libvirtapi;
 import com.example.libvirtapi.app.*;
 import com.example.libvirtapi.domain.VmTypeRepository;
 import com.example.libvirtapi.ports.db.JdbcVmInventory;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@Configuration
+@EnableAutoConfiguration
+@EnableTransactionManagement(proxyTargetClass = true)
 public class LibvirtApiApplicationContext {
 
     @Bean

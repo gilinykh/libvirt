@@ -1,0 +1,1 @@
+insert into vm_type(id, name, server_name, cpu_type, cpu_count, ram, ssd, gpu) values('AI-2', 'AI-2', 'SuperMicro SuperServer', 'Dual Intel Xeon Gold 6152 Processor', 2, 256, 100, '{"type": "Nvidia GTX1080Ti","ips": ["001232:25:0.1", "004758:72:0.1"]}');
